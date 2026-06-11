@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Supervised Run Product Concept</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f6f2;
+        --paper: #fffdfa;
+        --ink: #171717;
+        --muted: #6f6a60;
+        --faint: #a59e92;
+        --line: #e7e0d6;
+        --line-strong: #d8cdbc;
+        --accent: #9b6a22;
+        --accent-soft: #f2eadb;
+        --safe: #276749;
+        --review: #8a5a10;
+        --approval: #9f3a2f;
+        --shadow: 0 24px 70px rgba(40, 34, 25, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top, rgba(255, 255, 255, 0.9), transparent 34rem),
+          var(--bg);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      main {
+        width: min(840px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 56px 0 72px;
+      }
+
+      header {
+        padding: 30px 0 34px;
+        border-bottom: 1px solid var(--line-strong);
+      }
+
+      .eyebrow,
+      .section-label {
+        margin: 0 0 12px;
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 720;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin: 0;
+        font-size: clamp(46px, 8vw, 86px);
+        line-height: 0.95;
+        letter-spacing: -0.055em;
+      }
+
+      .lede {
+        max-width: 670px;
+        margin: 22px 0 0;
+        color: var(--muted);
+        font-size: 20px;
+        line-height: 1.45;
+      }
+
+      section {
+        padding: 36px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      h2 {
+        margin: 0 0 16px;
+        font-size: 30px;
+        line-height: 1.1;
+        letter-spacing: -0.035em;
+      }
+
+      p {
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.65;
+      }
+
+      .statement {
+        padding: 22px 24px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+      }
+
+      .statement p {
+        margin: 0;
+        color: var(--ink);
+        font-size: 22px;
+        line-height: 1.35;
+        letter-spacing: -0.02em;
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+        margin-top: 18px;
+      }
+
+      .flow span {
+        min-height: 54px;
+        display: grid;
+        place-items: center;
+        padding: 10px;
+        color: var(--ink);
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        font-size: 14px;
+        font-weight: 680;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      .quiet-panel {
+        padding: 20px;
+        background: rgba(255, 253, 250, 0.72);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+      }
+
+      .quiet-panel h3 {
+        margin: 0 0 10px;
+        font-size: 17px;
+        letter-spacing: -0.02em;
+      }
+
+      ul {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      li {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.45;
+      }
+
+      .steps {
+        counter-reset: step;
+      }
+
+      .steps li {
+        counter-increment: step;
+        display: grid;
+        grid-template-columns: 34px 1fr;
+        gap: 12px;
+        align-items: start;
+        padding: 14px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .steps li:first-child {
+        border-top: 0;
+      }
+
+      .steps li::before {
+        content: counter(step);
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        color: var(--accent);
+        background: var(--accent-soft);
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 760;
+      }
+
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 0 10px;
+        color: var(--muted);
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 650;
+      }
+
+      .quality {
+        color: var(--ink);
+        font-size: 20px;
+        line-height: 1.45;
+        letter-spacing: -0.02em;
+      }
+
+      @media (max-width: 760px) {
+        main {
+          width: min(100vw - 24px, 840px);
+          padding-top: 28px;
+        }
+
+        .flow,
+        .split {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 48px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">AI super-agent product concept</p>
+        <h1>Supervised Run</h1>
+        <p class="lede">
+          A calm interaction model for delegating work to an AI agent while keeping
+          the user oriented, informed, and in control.
+        </p>
+      </header>
+
+      <section>
+        <p class="section-label">Core thesis</p>
+        <div class="statement">
+          <p>
+            The best agent products do not expose everything at once. They guide
+            the user through a supervised run where the agent can act safely,
+            pause for consequence, explain itself, and recover when needed.
+          </p>
+        </div>
+        <div class="flow" aria-label="Product flow">
+          <span>Goal</span>
+          <span>Plan</span>
+          <span>Run</span>
+          <span>Approval</span>
+          <span>Result</span>
+        </div>
+      </section>
+
+      <section class="split">
+        <div class="quiet-panel">
+          <h3>User Problem</h3>
+          <p>
+            Users want to delegate meaningful work, but most AI interfaces either
+            make them babysit every step or hide too much until an action has
+            already happened.
+          </p>
+        </div>
+        <div class="quiet-panel">
+          <h3>Product Position</h3>
+          <p>
+            Supervised Run is not a chatbot or dashboard. It is a focused run
+            sequence with visible planning, scoped autonomy, and explicit approval
+            before real-world action.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">Interaction model</p>
+        <ol class="steps">
+          <li><strong>Compose the goal.</strong> The user describes the outcome and chooses an autonomy level.</li>
+          <li><strong>Review the plan.</strong> The agent separates safe steps, review steps, and approval steps.</li>
+          <li><strong>Run with focus.</strong> Completed steps collapse, the current step expands, and the next decision stays clear.</li>
+          <li><strong>Pause for approval.</strong> Consequential actions explain why approval is required before the user decides.</li>
+          <li><strong>Return a result.</strong> The final state is a useful artifact, not a transcript.</li>
+        </ol>
+      </section>
+
+      <section>
+        <p class="section-label">Trust mechanisms</p>
+        <div class="tag-row">
+          <span class="tag">Plan before action</span>
+          <span class="tag">Scoped autonomy</span>
+          <span class="tag">Risk labels</span>
+          <span class="tag">One focused step</span>
+          <span class="tag">Approval gate</span>
+          <span class="tag">Plain rationale</span>
+          <span class="tag">Pause and edit</span>
+          <span class="tag">Concise result</span>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">Quality bar</p>
+        <p class="quality">
+          A strong super-agent product should make delegation feel calm and
+          governable. The user should always know what the agent is doing, why it
+          is doing it, what happens next, and what requires approval.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
